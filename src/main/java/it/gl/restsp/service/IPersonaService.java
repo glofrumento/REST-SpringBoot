@@ -9,4 +9,5 @@ public interface IPersonaService {
   public List<Persona> findAll();
   public Persona findById(Long id);
   public Persona save(Persona persona);
+  public void deletePersona(Long id);
 }

@@ -33,4 +33,8 @@ public class PersonaService implements IPersonaService {
     return persona;
   }
 
+  @Override
+  public void deletePersona(Long id) {
+    repository.deleteById(id);
+  }
 }

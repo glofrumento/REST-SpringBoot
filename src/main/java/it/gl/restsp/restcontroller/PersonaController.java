@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -42,9 +43,9 @@ public class PersonaController {
   /*
    * @PathVariable
    */
-  // curl localhost:8080/rest/v1/persona/100 | jq
+  // curl localhost:8080/rest/v1/persone/100 | jq
   //
-  @GetMapping("/persona/{personaId}")
+  @GetMapping("/persone/{personaId}")
   public ResponseEntity<Persona> findPersona(@PathVariable Long personaId) throws  PersonaNotFoundException {
 
     Persona persona = personaService.findById(personaId);
@@ -177,5 +178,20 @@ public class PersonaController {
     String response = new String("User agent: " + userAgent + "   " + "AuthToken: " + token);
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
+  
+  // curl -X DELETE localhost:8080/rest/v1/persone/102 | jq
+  //
+  @DeleteMapping("/persone/{personaId}")
+  public ResponseEntity<Persona> deletePersona(@PathVariable Long personaId) throws  PersonaNotFoundException {
+
+    Persona persona = personaService.findById(personaId);
+    if (persona != null) {
+      personaService.deletePersona(personaId);
+      return new ResponseEntity<>(persona, HttpStatus.OK);
+    } else {
+      throw new PersonaNotFoundException("Persona non trovata con id: " + personaId);
+    }
+  }
+
   
 }
