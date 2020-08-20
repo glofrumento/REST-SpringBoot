@@ -3,6 +3,8 @@ package it.gl.restsp.restcontroller;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,24 +125,23 @@ public class PersonaController {
   }
   
   
-  
   // 
-  // curl -X POST -H "Content-Type: application/json" -d "{\"id\":200,\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persona | jq
-  // curl -X POST -H "Content-Type: application/json" -d "{\"id\":200,\"cognome\":\"Gialli\", \"nome\":\"Ulisse\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persona -i
-  // curl --% -X POST -H "Content-Type: application/json" -H "Accept: application/xml" -d "{\"id\":200,\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persona | xmllint --format -
+  // curl -X POST -H "Content-Type: application/json" -d "{\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone | jq
+  // curl -X POST -H "Content-Type: application/json" -d "{\"cognome\":\"Gialli\", \"nome\":\"Ulisse\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone -i
+  // curl --% -X POST -H "Content-Type: application/json" -H "Accept: application/xml" -d "{\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone | xmllint --format -
   //
-  // Powershell: curl --% -X POST -H "Content-Type: application/json" -d "{\"id\":200,\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persona | jq
+  // Powershell: curl --% -X POST -H "Content-Type: application/json" -d "{\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone | jq
   //
-  // curl -X POST -H "Content-Type: application/json" -H "Accept: application/xml" -d "{\"id\":200,\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persona | xmllint --format -
-  // curl -X POST -H "Content-Type: application/xml" -H "Accept: application/xml" -d "<Persona><id>200</id><cognome>Verdi</cognome><nome>Achille</nome><eta>45</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persona | xmllint --format -
-  // curl -X POST -H "Content-Type: application/xml" -H "Accept: application/json" -d "<Persona><id>200</id><cognome>Verdi</cognome><nome>Achille</nome><eta>45</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persona | jq
-  // curl -X POST -H "Content-Type: application/xml" -d "<Persona><id>200</id><cognome>Verdi</cognome><nome>Achille</nome><eta>45</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persona | jq
+  // curl -X POST -H "Content-Type: application/json" -H "Accept: application/xml" -d "{\"id\":200,\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone | xmllint --format -
+  // curl -X POST -H "Content-Type: application/xml" -H "Accept: application/xml" -d "<Persona><cognome>Verdi</cognome><nome>Achille</nome><eta>35</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persone | xmllint --format -
+  // curl -X POST -H "Content-Type: application/xml" -H "Accept: application/json" -d "<Persona><cognome>Verdi</cognome><nome>Achille</nome><eta>35</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persone | jq
+  // curl -X POST -H "Content-Type: application/xml" -d "<Persona><cognome>Verdi</cognome><nome>Achille</nome><eta>35</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persone | jq
   //
-  @PostMapping(value = "/persona",
+  @PostMapping(value = "/persone",
               consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
               produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
   @ResponseStatus(value = HttpStatus.CREATED)
-  public Persona createPersona(@RequestBody Persona persona) throws PersonaNotCreatedException {
+  public Persona createPersona(@Valid @RequestBody Persona persona) throws PersonaNotCreatedException {
     
     Persona newPersona = personaService.save(persona);
 
@@ -153,10 +155,41 @@ public class PersonaController {
       throw new PersonaNotCreatedException("Persona non creata");
   }  
   
-  // Validazione email
-  // curl -X PATCH localhost:8080/rest/v1/persona/100?email=a.gialli@gmail.com | jq
+  // 
+  // curl -X PUT -H "Content-Type: application/json" -d "{\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":45, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone | jq
+  // curl -X PUT -H "Content-Type: application/json" -d "{\"cognome\":\"Gialli\", \"nome\":\"Ulisse\", \"eta\":45, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone -i
+  // curl --% -X PUT -H "Content-Type: application/json" -H "Accept: application/xml" -d "{\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":45, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone | xmllint --format -
   //
-  @PatchMapping("/persona/{id}")
+  // Powershell: curl --% -X PUT -H "Content-Type: application/json" -d "{\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":45, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone | jq
+  //
+  // curl -X PUT -H "Content-Type: application/json" -H "Accept: application/xml" -d "{\"id\":200,\"cognome\":\"Gialli\", \"nome\":\"Antonio\", \"eta\":35, \"email\":\"antonio.gialli@gmail.com\"}" localhost:8080/rest/v1/persone | xmllint --format -
+  // curl -X PUT -H "Content-Type: application/xml" -H "Accept: application/xml" -d "<Persona><cognome>Verdi</cognome><nome>Achille</nome><eta>45</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persone | xmllint --format -
+  // curl -X PUT -H "Content-Type: application/xml" -H "Accept: application/json" -d "<Persona><cognome>Verdi</cognome><nome>Achille</nome><eta>45</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persone | jq
+  // curl -X PUT -H "Content-Type: application/xml" -d "<Persona><cognome>Verdi</cognome><nome>Achille</nome><eta>45</eta><email>achille.verdi@gmail.com</email></Persona>" localhost:8080/rest/v1/persone | jq
+  //
+  @PutMapping(value = "/persone/{personaId}",
+              consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE},
+              produces = {MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE})
+  @ResponseStatus(value = HttpStatus.CREATED)
+  public ResponseEntity<Persona> replacePersona(@PathVariable Long personaId,
+                                @Valid @RequestBody Persona persona) throws PersonaNotFoundException {
+   
+    persona.setId(personaId);
+    Persona updatePersona = personaService.replace(persona);
+
+    if (updatePersona != null)
+      return new ResponseEntity<>(updatePersona, HttpStatus.OK);
+    else {
+      System.out.println("§§§§§§§§§§§§ ECCEZIONE");
+      throw new PersonaNotFoundException("Persona non trovata con id: " + personaId);
+    }
+  }
+  
+  
+  // Validazione email
+  // curl -X PATCH localhost:8080/rest/v1/persone/100?email=a.gialli@gmail.com | jq
+  //
+  @PatchMapping("/persone/{id}")
   public ResponseEntity<Persona> changeEmail(
       @PathVariable("id") Long userId,
       @RequestParam("email") String email) {
@@ -168,9 +201,9 @@ public class PersonaController {
   }
   
   // Request Header
-  // curl -H "AuthToken: 12345" localhost:8080/rest/v1/persona/header
+  // curl -H "AuthToken: 12345" localhost:8080/rest/v1/persone/header
   //
-  @GetMapping("/persona/header")
+  @GetMapping("/persone/header")
   public ResponseEntity<String> getHeader(
       @RequestHeader("User-Agent") String userAgent,
       @RequestHeader("AuthToken") String token) {

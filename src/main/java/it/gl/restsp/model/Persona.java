@@ -5,6 +5,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
@@ -15,33 +18,29 @@ import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 //import javax.xml.bind.annotation.XmlRootElement;
 
 @Entity
-//@XmlRootElement(name = "persona")
-//@XmlAccessorType(XmlAccessType.NONE)
 @JacksonXmlRootElement(localName = "persona")
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Table(name = "PERSONE")
 public class Persona {
 
   @Id
-  //@XmlAttribute
-  @JacksonXmlProperty(isAttribute = true)
   @GeneratedValue(strategy = GenerationType.AUTO)
+  @JacksonXmlProperty(isAttribute = true)
   private Long id;
 
-//  @XmlAttribute
   @JacksonXmlProperty
+  @NotNull(message="Il cognome non puà essere vuoto o mancante")
+  @Size(min=2, message="Il cognome deve essere di almeno 2 caratteri")
   private String cognome;
   
-//  @XmlAttribute
   @JacksonXmlProperty
   private String nome;
   
-//  @XmlAttribute
   @JacksonXmlProperty
   private int eta;
 
-//  @XmlAttribute
   @JacksonXmlProperty
+  @Email
   private String email;
   
   public Persona() {

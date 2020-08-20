@@ -34,6 +34,16 @@ public class PersonaService implements IPersonaService {
   }
 
   @Override
+  public Persona replace(Persona persona) {
+    if (repository.existsById(persona.getId())) {
+      repository.save(persona);
+    } else {
+      persona = null;
+    }
+    return persona;
+  }
+  
+  @Override
   public void deletePersona(Long id) {
     repository.deleteById(id);
   }
