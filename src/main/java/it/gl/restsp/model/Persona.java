@@ -29,20 +29,20 @@ public class Persona {
   private Long id;
 
   @JacksonXmlProperty
-  @NotNull(message="Il cognome non puà essere vuoto o mancante")
-  @Size(min=2, message="Il cognome deve essere di almeno 2 caratteri")
+  @NotNull(message = "Il cognome non puà essere vuoto o mancante")
+  @Size(min = 2, message = "Il cognome deve essere di almeno 2 caratteri")
   private String cognome;
-  
+
   @JacksonXmlProperty
   private String nome;
-  
+
   @JacksonXmlProperty
   private int eta;
 
   @JacksonXmlProperty
   @Email
   private String email;
-  
+
   public Persona() {
     super();
   }
@@ -146,5 +146,5 @@ public class Persona {
   public String toString() {
     return "Persona [id=" + id + ", cognome=" + cognome + ", nome=" + nome + ", eta=" + eta + ", email=" + email + "]";
   }
-  
+
 }
