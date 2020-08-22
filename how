@@ -1,0 +1,29 @@
+[33mcommit 6d9db127b9d5afaf0c719e7050352bf91b2c7c25[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31mREST-SpringBoot/master[m[33m)[m
+Author: Giovanni Lofrumento <giovanni.lofrumento@gmail.com>
+Date:   Fri Aug 21 18:52:16 2020 +0200
+
+    Changed PostMapping implementation
+
+[33mcommit 810a18c186d98060ed61acd7bf4d8725f4d244aa[m
+Author: Giovanni Lofrumento <giovanni.lofrumento@gmail.com>
+Date:   Fri Aug 21 00:06:58 2020 +0200
+
+    Adding data validation and @PutMapping
+
+[33mcommit 3bb056ef5c5654ff279dbdcf2fe80b47988ebc28[m
+Author: Giovanni Lofrumento <giovanni.lofrumento@gmail.com>
+Date:   Sat Aug 8 23:23:14 2020 +0200
+
+    Added DELETE operation
+
+[33mcommit b1ded2b54f8df4c927369349438dc8b2158411c6[m
+Author: Giovanni Lofrumento <giovanni.lofrumento@gmail.com>
+Date:   Sat Aug 8 22:24:48 2020 +0200
+
+    First commit
+
+[33mcommit 3d745482dad2efc77a4752090d5d982a916a97b5[m
+Author: Giovanni Lofrumento <giovanni.lofrumento@gmail.com>
+Date:   Sat Aug 8 22:11:35 2020 +0200
+
+    Initial commit
